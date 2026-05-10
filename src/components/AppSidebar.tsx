@@ -7,6 +7,7 @@ import {
   TrendingUp,
   Wallet,
   CalendarDays,
+  Brain,
   LogOut,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -19,6 +20,7 @@ const items = [
   { to: "/horas-extras", label: "Horas extras", icon: TrendingUp },
   { to: "/liquidaciones", label: "Liquidaciones", icon: Wallet },
   { to: "/vacaciones", label: "Vacaciones", icon: CalendarDays },
+  { to: "/inteligencia", label: "Inteligencia Laboral", icon: Brain },
 ] as const;
 
 export function AppSidebar() {
