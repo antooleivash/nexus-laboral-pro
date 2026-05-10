@@ -9,19 +9,43 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VacacionesRouteImport } from './routes/vacaciones'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LiquidacionesRouteImport } from './routes/liquidaciones'
+import { Route as HorasExtrasRouteImport } from './routes/horas-extras'
 import { Route as EmpleadosRouteImport } from './routes/empleados'
+import { Route as CartasRouteImport } from './routes/cartas'
 import { Route as AsistenciaRouteImport } from './routes/asistencia'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VacacionesRoute = VacacionesRouteImport.update({
+  id: '/vacaciones',
+  path: '/vacaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LiquidacionesRoute = LiquidacionesRouteImport.update({
+  id: '/liquidaciones',
+  path: '/liquidaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HorasExtrasRoute = HorasExtrasRouteImport.update({
+  id: '/horas-extras',
+  path: '/horas-extras',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmpleadosRoute = EmpleadosRouteImport.update({
   id: '/empleados',
   path: '/empleados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartasRoute = CartasRouteImport.update({
+  id: '/cartas',
+  path: '/cartas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AsistenciaRoute = AsistenciaRouteImport.update({
@@ -38,39 +62,87 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/asistencia': typeof AsistenciaRoute
+  '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
+  '/horas-extras': typeof HorasExtrasRoute
+  '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
+  '/vacaciones': typeof VacacionesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/asistencia': typeof AsistenciaRoute
+  '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
+  '/horas-extras': typeof HorasExtrasRoute
+  '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
+  '/vacaciones': typeof VacacionesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/asistencia': typeof AsistenciaRoute
+  '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
+  '/horas-extras': typeof HorasExtrasRoute
+  '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
+  '/vacaciones': typeof VacacionesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/asistencia' | '/empleados' | '/login'
+  fullPaths:
+    | '/'
+    | '/asistencia'
+    | '/cartas'
+    | '/empleados'
+    | '/horas-extras'
+    | '/liquidaciones'
+    | '/login'
+    | '/vacaciones'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/asistencia' | '/empleados' | '/login'
-  id: '__root__' | '/' | '/asistencia' | '/empleados' | '/login'
+  to:
+    | '/'
+    | '/asistencia'
+    | '/cartas'
+    | '/empleados'
+    | '/horas-extras'
+    | '/liquidaciones'
+    | '/login'
+    | '/vacaciones'
+  id:
+    | '__root__'
+    | '/'
+    | '/asistencia'
+    | '/cartas'
+    | '/empleados'
+    | '/horas-extras'
+    | '/liquidaciones'
+    | '/login'
+    | '/vacaciones'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AsistenciaRoute: typeof AsistenciaRoute
+  CartasRoute: typeof CartasRoute
   EmpleadosRoute: typeof EmpleadosRoute
+  HorasExtrasRoute: typeof HorasExtrasRoute
+  LiquidacionesRoute: typeof LiquidacionesRoute
   LoginRoute: typeof LoginRoute
+  VacacionesRoute: typeof VacacionesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vacaciones': {
+      id: '/vacaciones'
+      path: '/vacaciones'
+      fullPath: '/vacaciones'
+      preLoaderRoute: typeof VacacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -78,11 +150,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/liquidaciones': {
+      id: '/liquidaciones'
+      path: '/liquidaciones'
+      fullPath: '/liquidaciones'
+      preLoaderRoute: typeof LiquidacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/horas-extras': {
+      id: '/horas-extras'
+      path: '/horas-extras'
+      fullPath: '/horas-extras'
+      preLoaderRoute: typeof HorasExtrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/empleados': {
       id: '/empleados'
       path: '/empleados'
       fullPath: '/empleados'
       preLoaderRoute: typeof EmpleadosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cartas': {
+      id: '/cartas'
+      path: '/cartas'
+      fullPath: '/cartas'
+      preLoaderRoute: typeof CartasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/asistencia': {
@@ -105,8 +198,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AsistenciaRoute: AsistenciaRoute,
+  CartasRoute: CartasRoute,
   EmpleadosRoute: EmpleadosRoute,
+  HorasExtrasRoute: HorasExtrasRoute,
+  LiquidacionesRoute: LiquidacionesRoute,
   LoginRoute: LoginRoute,
+  VacacionesRoute: VacacionesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
