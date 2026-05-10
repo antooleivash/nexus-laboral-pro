@@ -120,6 +120,18 @@ function CartasPage() {
 
   useEffect(() => { cargarDatos(); }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = sessionStorage.getItem("prefill_carta");
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      setForm(prev => ({ ...prev, ...data }));
+      setShowForm(true);
+    } catch {}
+    sessionStorage.removeItem("prefill_carta");
+  }, []);
+
   async function cargarDatos() {
     setLoading(true);
     const { data: emps } = await supabase.from("empleados").select("*").eq("estado", "Activo");
