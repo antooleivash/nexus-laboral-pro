@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VacacionesRouteImport } from './routes/vacaciones'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LiquidacionesRouteImport } from './routes/liquidaciones'
+import { Route as InteligenciaRouteImport } from './routes/inteligencia'
 import { Route as HorasExtrasRouteImport } from './routes/horas-extras'
 import { Route as EmpleadosRouteImport } from './routes/empleados'
 import { Route as CartasRouteImport } from './routes/cartas'
@@ -31,6 +32,11 @@ const LoginRoute = LoginRouteImport.update({
 const LiquidacionesRoute = LiquidacionesRouteImport.update({
   id: '/liquidaciones',
   path: '/liquidaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InteligenciaRoute = InteligenciaRouteImport.update({
+  id: '/inteligencia',
+  path: '/inteligencia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HorasExtrasRoute = HorasExtrasRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
   '/horas-extras': typeof HorasExtrasRoute
+  '/inteligencia': typeof InteligenciaRoute
   '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
   '/vacaciones': typeof VacacionesRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
   '/horas-extras': typeof HorasExtrasRoute
+  '/inteligencia': typeof InteligenciaRoute
   '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
   '/vacaciones': typeof VacacionesRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/cartas': typeof CartasRoute
   '/empleados': typeof EmpleadosRoute
   '/horas-extras': typeof HorasExtrasRoute
+  '/inteligencia': typeof InteligenciaRoute
   '/liquidaciones': typeof LiquidacionesRoute
   '/login': typeof LoginRoute
   '/vacaciones': typeof VacacionesRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/cartas'
     | '/empleados'
     | '/horas-extras'
+    | '/inteligencia'
     | '/liquidaciones'
     | '/login'
     | '/vacaciones'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/cartas'
     | '/empleados'
     | '/horas-extras'
+    | '/inteligencia'
     | '/liquidaciones'
     | '/login'
     | '/vacaciones'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/cartas'
     | '/empleados'
     | '/horas-extras'
+    | '/inteligencia'
     | '/liquidaciones'
     | '/login'
     | '/vacaciones'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   CartasRoute: typeof CartasRoute
   EmpleadosRoute: typeof EmpleadosRoute
   HorasExtrasRoute: typeof HorasExtrasRoute
+  InteligenciaRoute: typeof InteligenciaRoute
   LiquidacionesRoute: typeof LiquidacionesRoute
   LoginRoute: typeof LoginRoute
   VacacionesRoute: typeof VacacionesRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/liquidaciones'
       fullPath: '/liquidaciones'
       preLoaderRoute: typeof LiquidacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inteligencia': {
+      id: '/inteligencia'
+      path: '/inteligencia'
+      fullPath: '/inteligencia'
+      preLoaderRoute: typeof InteligenciaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/horas-extras': {
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartasRoute: CartasRoute,
   EmpleadosRoute: EmpleadosRoute,
   HorasExtrasRoute: HorasExtrasRoute,
+  InteligenciaRoute: InteligenciaRoute,
   LiquidacionesRoute: LiquidacionesRoute,
   LoginRoute: LoginRoute,
   VacacionesRoute: VacacionesRoute,
@@ -208,3 +229,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
